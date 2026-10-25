@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PROJECT WORDWISE • Grade 6 MATATAG English (2026 Edition)</title>
+
+  <!-- PWA Manifest & iOS Support -->
+  <link rel="manifest" href="data:application/manifest+json;utf8,{
+    &quot;name&quot;: &quot;Project WORDWISE 2026&quot;,
+    &quot;short_name&quot;: &quot;WORDWISE&quot;,
+    &quot;description&quot;: &quot;MATATAG Grade 6 Vocabulary &amp; Speech Coach - San Jose Del Monte Central School&quot;,
+    &quot;start_url&quot;: &quot;.&quot;,
+    &quot;display&quot;: &quot;standalone&quot;,
+    &quot;background_color&quot;: &quot;#0f172a&quot;,
+    &quot;theme_color&quot;: &quot;#1e3a8a&quot;,
+    &quot;icons&quot;: [{
+      &quot;src&quot;: &quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231e3a8a'/><path d='M25 65 L40 35 L50 55 L60 35 L75 65' stroke='%23f59e0b' stroke-width='8' fill='none' stroke-linecap='round'/></svg>&quot;,
+      &quot;sizes&quot;: &quot;192x192 512x512&quot;,
+      &quot;type&quot;: &quot;image/svg+xml&quot;
+    }]
+  }">
+  <meta name="theme-color" content="#1e3a8a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            accent: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Font: Outfit & Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    h1, h2, h3, .font-heading {
+      font-family: 'Outfit', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.3);
+      border-radius: 99px;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+    }
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.92);
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+  <!-- ========================================== -->
+  <!-- LOGIN GATE / PUPIL IDENTIFICATION MODAL    -->
+  <!-- ========================================== -->
+  <div id="loginGateModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md">
+    <div class="glass-card w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 text-center relative overflow-hidden">
+      
+      <!-- Decorative SVG Watermark -->
+      <div class="absolute -top-12 -right-12 opacity-10 pointer-events-none">
+        <svg width="220" height="220" viewBox="0 0 200 200" fill="currentColor" class="text-brand-900 dark:text-brand-500">
+          <circle cx="100" cy="100" r="90" />
+        </svg>
+      </div>
+
+      <!-- School & App Emblem -->
+      <div class="flex justify-center mb-4">
+        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-gradient-to-br from-amber-400 via-brand-500 to-brand-900 shadow-xl">
+          <svg viewBox="0 0 200 200" class="w-full h-full rounded-full">
+            <circle cx="100" cy="100" r="98" fill="#1e3a8a" />
+            <circle cx="100" cy="100" r="90" fill="none" stroke="#f59e0b" stroke-width="4" stroke-dasharray="6,4" />
+            <path id="circleTextPathGate" d="M 25, 100 A 75,75 0 1,1 175,100 A 75,75 0 1,1 25,100" fill="none" />
+            <text fill="#ffffff" font-size="10.5" font-weight="bold" letter-spacing="1.2">
+              <textPath href="#circleTextPathGate" startOffset="50%" text-anchor="middle">
+                • SAN JOSE DEL MONTE CENTRAL SCHOOL • 2026 •
+              </textPath>
+            </text>
+            <circle cx="100" cy="100" r="68" fill="#0f172a" stroke="#d97706" stroke-width="2" />
+            <path d="M 50 120 Q 80 135 100 115 Q 120 135 150 120 L 150 100 Q 120 115 100 95 Q 80 115 50 100 Z" fill="#f59e0b" opacity="0.9"/>
+            <path d="M 60 70 L 75 110 L 100 85 L 125 110 L 140 70" stroke="#3b82f6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <polygon points="100,55 125,65 100,75 75,65" fill="#f59e0b"/>
+            <polygon points="100,80 105,90 115,90 107,96 110,106 100,100 90,106 93,96 85,90 95,90" fill="#ffffff"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-brand-900 dark:text-white tracking-tight">PROJECT WORDWISE</h1>
+      <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 mb-6 font-medium">Grade 6 MATATAG English Vocabulary & Speech Coach • 2026</p>
+
+      <form id="pupilLoginForm" class="space-y-4 text-left">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Learner's Full Name</label>
+          <input type="text" id="pupilNameInput" required placeholder="e.g. Juan De La Cruz" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 outline-none transition" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Grade 6 Section</label>
+          <input type="text" id="pupilSectionInput" required placeholder="e.g. Grade 6 - Sapphire" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 outline-none transition" />
+        </div>
+
+        <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-brand-800 to-brand-600 hover:from-brand-900 hover:to-brand-700 text-white font-bold text-base shadow-lg shadow-brand-500/25 active:scale-95 transition transform">
+          🚀 Start Learning Now
+        </button>
+      </form>
+
+      <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+        <span>SJDMCS MATATAG 2026</span>
+        <button id="teacherPortalQuickBtn" class="text-brand-600 dark:text-brand-400 font-bold hover:underline">Teacher Portal 🔑</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MAIN APP CONTAINER                         -->
+  <!-- ========================================== -->
+  <div id="mainAppContent" class="flex-1 flex flex-col min-h-screen">
+
+    <!-- NAVBAR HEADER -->
+    <header class="sticky top-0 z-40 bg-brand-900/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-brand-800 dark:border-slate-800 text-white shadow-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
+        
+        <!-- Logo & Title -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full p-0.5 bg-gradient-to-tr from-amber-400 to-brand-400 shadow-md">
+            <svg viewBox="0 0 200 200" class="w-full h-full rounded-full">
+              <circle cx="100" cy="100" r="98" fill="#1e3a8a" />
+              <path id="circleTextPathNav" d="M 25, 100 A 75,75 0 1,1 175,100 A 75,75 0 1,1 25,100" fill="none" />
+              <text fill="#ffffff" font-size="11" font-weight="bold" letter-spacing="1">
+                <textPath href="#circleTextPathNav" startOffset="50%" text-anchor="middle">SJDMCS • WORDWISE 2026</textPath>
+              </text>
+              <circle cx="100" cy="100" r="65" fill="#0f172a" stroke="#f59e0b" stroke-width="3" />
+              <path d="M 60 70 L 75 110 L 100 85 L 125 110 L 140 70" stroke="#3b82f6" stroke-width="10" stroke-linecap="round" fill="none"/>
+              <polygon points="100,55 125,65 100,75 75,65" fill="#f59e0b"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-base sm:text-xl font-extrabold tracking-tight leading-tight flex items-center gap-1.5">
+              <span>PROJECT WORDWISE</span>
+              <span class="text-[10px] bg-amber-500 text-slate-950 font-black px-1.5 py-0.5 rounded uppercase tracking-wider">2026</span>
+            </h1>
+            <p class="text-[11px] sm:text-xs text-brand-200 dark:text-slate-400 hidden sm:block">San Jose Del Monte Central School • MATATAG Grade 6</p>
+          </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="flex items-center gap-2">
+          
+          <!-- Live Online/Offline Status Indicator -->
+          <div id="connectionStatusBadge" class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="connectionStatusText">Online 🌐</span>
+          </div>
+
+          <!-- Color Theme Selector Dropdown -->
+          <div class="relative">
+            <button id="themeToggleBtn" title="Change App Color Theme" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-brand-800/80 hover:bg-brand-700 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-bold flex items-center gap-1.5 transition">
+              <span>🎨</span>
+              <span class="hidden md:inline">Theme</span>
+            </button>
+            <div id="themeDropdownMenu" class="hidden absolute right-0 mt-2 w-48 rounded-2xl glass-card shadow-2xl border border-slate-200 dark:border-slate-800 p-2 z-50 text-slate-800 dark:text-slate-100">
+              <div class="text-[10px] uppercase font-extrabold tracking-wider text-slate-400 px-3 py-1">Select Theme</div>
+              <button onclick="setTheme('navy')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold flex items-center justify-between">
+                <span>⚓ Royal Navy</span>
+                <span class="w-3 h-3 rounded-full bg-blue-900 border border-white"></span>
+              </button>
+              <button onclick="setTheme('emerald')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold flex items-center justify-between">
+                <span>🌿 Emerald Forest</span>
+                <span class="w-3 h-3 rounded-full bg-emerald-800 border border-white"></span>
+              </button>
+              <button onclick="setTheme('purple')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold flex items-center justify-between">
+                <span>🔮 Royal Purple</span>
+                <span class="w-3 h-3 rounded-full bg-purple-900 border border-white"></span>
+              </button>
+              <button onclick="setTheme('amber')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold flex items-center justify-between">
+                <span>☀️ Solar Amber</span>
+                <span class="w-3 h-3 rounded-full bg-amber-600 border border-white"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Share App Modal Trigger -->
+          <button id="openShareModalBtn" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md transition">
+            <span>🔗</span>
+            <span class="hidden md:inline">Share App</span>
+          </button>
+
+          <!-- PWA Install Button -->
+          <button id="pwaInstallBtn" class="hidden p-2 sm:px-3 sm:py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md transition">
+            <span>📲</span>
+            <span class="hidden md:inline">Install App</span>
+          </button>
+
+          <!-- Teacher Dashboard Access -->
+          <button id="teacherDashboardBtn" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-brand-800 hover:bg-brand-700 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-bold flex items-center gap-1.5 transition">
+            <span>📊</span>
+            <span class="hidden md:inline">Dashboard</span>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN BODY CONTENT -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+      <!-- LEARNER PROFILE BAR -->
+      <div id="learnerWelcomeBar" class="glass-card rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-800 dark:text-brand-300 flex items-center justify-center text-lg font-black shadow-inner">
+            👤
+          </div>
+          <div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Logged in Pupil</div>
+            <div class="font-extrabold text-sm sm:text-base text-slate-800 dark:text-slate-100">
+              <span id="activePupilNameDisplay">Guest Pupil</span>
+              <span class="text-xs font-normal text-brand-600 dark:text-brand-400 ml-2" id="activePupilSectionDisplay">(Grade 6)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="switchPupilBtn" class="text-xs px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition">
+            Switch Pupil 🔄
+          </button>
+        </div>
+      </div>
+
+      <!-- SEARCH MODE & DICTIONARY CONTROLLER -->
+      <section class="glass-card rounded-3xl p-5 sm:p-8 shadow-md border border-slate-200 dark:border-slate-800 space-y-4">
+        
+        <!-- Search Mode Toggle Bar (Online vs. Offline) -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+          <div>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">Vocabulary Explorer</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Search words from the Grade 6 MATATAG BOW or live Web Dictionary.</p>
+          </div>
+
+          <!-- Mode Radio Switcher -->
+          <div class="bg-slate-200 dark:bg-slate-800 p-1 rounded-2xl flex items-center text-xs font-bold">
+            <button id="modeOfflineBtn" class="px-3.5 py-1.5 rounded-xl transition-all shadow-sm bg-white dark:bg-slate-900 text-brand-800 dark:text-brand-300">
+              📱 Offline BOW
+            </button>
+            <button id="modeOnlineBtn" class="px-3.5 py-1.5 rounded-xl transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+              🌐 Online Web (100k+)
+            </button>
+          </div>
+        </div>
+
+        <!-- Search Input Bar -->
+        <div class="relative flex items-center">
+          <input type="text" id="wordSearchInput" placeholder="Type a vocabulary word (e.g., context, connotation, persistent)..." class="w-full pl-5 pr-28 py-4 rounded-2xl border-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-medium text-base sm:text-lg focus:border-brand-500 focus:ring-4 focus:ring-brand-500/20 outline-none transition" />
+          <button id="executeSearchBtn" class="absolute right-2 px-5 py-2.5 rounded-xl bg-brand-800 hover:bg-brand-900 text-white font-bold text-sm shadow-md active:scale-95 transition">
+            Search
+          </button>
+        </div>
+
+        <!-- Quick Tag Suggestions -->
+        <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pt-1 text-xs">
+          <span class="text-slate-400 font-bold uppercase tracking-wider shrink-0">Sample Grade 6 BOW Words:</span>
+          <button onclick="quickSearch('context')" class="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-brand-100 dark:hover:bg-brand-900/40 text-slate-700 dark:text-slate-300 shrink-0">context</button>
+          <button onclick="quickSearch('denotation')" class="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-brand-100 dark:hover:bg-brand-900/40 text-slate-700 dark:text-slate-300 shrink-0">denotation</button>
+          <button onclick="quickSearch('connotation')" class="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-brand-100 dark:hover:bg-brand-900/40 text-slate-700 dark:text-slate-300 shrink-0">connotation</button>
+          <button onclick="quickSearch('affix')" class="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-brand-100 dark:hover:bg-brand-900/40 text-slate-700 dark:text-slate-300 shrink-0">affix</button>
+          <button onclick="quickSearch('viewpoint')" class="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-brand-100 dark:hover:bg-brand-900/40 text-slate-700 dark:text-slate-300 shrink-0">viewpoint</button>
+        </div>
+      </section>
+
+      <!-- WORD RESULT DISPLAY PANEL -->
+      <section id="wordResultSection" class="glass-card rounded-3xl p-6 sm:p-8 shadow-lg border border-slate-200 dark:border-slate-800 space-y-6">
+        
+        <!-- Header & Syllable Breakdown -->
+        <div class="flex flex-wrap items-start justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+          <div>
+            <div class="flex items-center gap-3 flex-wrap">
+              <h2 id="resultWordTitle" class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white capitalize tracking-tight">Context</h2>
+              <span id="resultPosBadge" class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-brand-100 text-brand-800 dark:bg-brand-900/60 dark:text-brand-300 border border-brand-300 dark:border-brand-700">Noun</span>
+              <span id="resultConnotationBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">0 Neutral</span>
+            </div>
+            <div id="resultSyllablesDisplay" class="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-2">
+              <span>Syllables: <strong class="text-brand-600 dark:text-brand-400" id="syllablesText">con • text</strong></span>
+              <button id="speakWordBtn" class="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-base" title="Listen to Pronunciation">🔊</button>
+            </div>
+          </div>
+
+          <!-- Interactive Action Buttons -->
+          <div class="flex items-center gap-2">
+            <button id="startSpeechCoachBtn" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs sm:text-sm shadow-md flex items-center gap-1.5">
+              🎙️ Speech Coach
+            </button>
+            <button id="generateQuizBtn" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-xs sm:text-sm shadow-md flex items-center gap-1.5">
+              📝 Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <!-- Definition Cards -->
+        <div class="space-y-3">
+          <h3 class="text-xs font-black uppercase tracking-wider text-slate-400">Meaning & Definition</h3>
+          <p id="resultDefinitionText" class="text-base sm:text-lg text-slate-800 dark:text-slate-200 font-medium leading-relaxed bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800">
+            The parts of a written or spoken statement that precede or follow a specific word or passage, usually influencing its meaning or effect.
+          </p>
+        </div>
+
+        <!-- Contextual Writing Models -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Sentence Example -->
+          <div class="p-4 rounded-2xl bg-brand-50/50 dark:bg-brand-950/30 border border-brand-100 dark:border-brand-900/50 space-y-2">
+            <div class="text-xs font-bold uppercase tracking-wider text-brand-800 dark:text-brand-300 flex items-center gap-1.5">
+              <span>✍️ Grade 6 Context Sentence</span>
+            </div>
+            <p id="resultSentenceText" class="text-sm text-slate-700 dark:text-slate-300 italic font-medium">
+              "Understanding the context of the story helped Maria answer the reading comprehension quiz easily."
+            </p>
+          </div>
+
+          <!-- Paragraph Example -->
+          <div class="p-4 rounded-2xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/50 space-y-2">
+            <div class="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
+              <span>📖 Expository Writing Model</span>
+            </div>
+            <p id="resultParagraphText" class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              When reading informational texts, Grade 6 pupils must examine surrounding clues. By analyzing the context, learners can infer unknown word meanings without relying entirely on a dictionary.
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- AI VOICE & SPEECH RECOGNITION COACH MODAL / PANEL -->
+      <section id="speechCoachPanel" class="hidden glass-card rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-emerald-500/40 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl p-2 rounded-2xl bg-emerald-100 dark:bg-emerald-900/50">🎙️</span>
+            <div>
+              <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">AI Speech Recognition Coach</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Read the sentence aloud to practice pronunciation accuracy.</p>
+            </div>
+          </div>
+          <button id="closeSpeechCoachBtn" class="text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-white px-2 py-1">✕ Close</button>
+        </div>
+
+        <!-- Target Target Phrase to Speak -->
+        <div class="p-4 rounded-2xl bg-slate-900 text-white space-y-1">
+          <div class="text-[10px] uppercase font-bold text-amber-400 tracking-wider">Target Phrase:</div>
+          <div id="targetSpeechPhrase" class="text-base sm:text-lg font-semibold leading-snug text-emerald-200">
+            "Understanding the context of the story helped Maria answer the reading comprehension quiz easily."
+          </div>
+        </div>
+
+        <!-- Recording Trigger & Live Transcript Display -->
+        <div class="flex flex-col items-center justify-center space-y-4 py-2">
+          <button id="recordMicBtn" class="w-20 h-20 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white text-3xl flex items-center justify-center shadow-xl shadow-emerald-500/30 active:scale-90 transition transform">
+            🎙️
+          </button>
+          <div id="recordingStatusText" class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Click microphone to start speaking
+          </div>
+        </div>
+
+        <!-- Evaluation Results Card -->
+        <div id="speechEvaluationCard" class="hidden p-4 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Pronunciation Accuracy Score</span>
+            <span id="speechScoreBadge" class="text-base font-extrabold px-3 py-1 rounded-full bg-emerald-500 text-white">92% Excellent</span>
+          </div>
+
+          <div class="space-y-1">
+            <div class="text-xs font-semibold text-slate-400">Word-by-Word Phonetic Assessment:</div>
+            <div id="phoneticBreakdownDisplay" class="p-3 rounded-xl bg-white dark:bg-slate-950 text-sm font-medium leading-relaxed flex flex-wrap gap-1.5 border border-slate-200 dark:border-slate-800">
+              <!-- Dynamically populated green/red highlighted words -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DYNAMIC QUIZ GENERATOR PANEL -->
+      <section id="quizContainerPanel" class="hidden glass-card rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-amber-500/40 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl p-2 rounded-2xl bg-amber-100 dark:bg-amber-900/50">📝</span>
+            <div>
+              <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">Vocabulary Practice Quiz</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">MATATAG Grade 6 English Competency Assessment</p>
+            </div>
+          </div>
+          <button id="closeQuizPanelBtn" class="text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-white px-2 py-1">✕ Close</button>
+        </div>
+
+        <!-- Quiz Items Stack -->
+        <form id="activeQuizForm" class="space-y-6">
+          <div id="quizQuestionsList" class="space-y-6">
+            <!-- Questions rendered via JavaScript -->
+          </div>
+
+          <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-base shadow-lg shadow-amber-500/20 active:scale-95 transition transform">
+            Submit Quiz Answers 🚀
+          </button>
+        </form>
+
+        <!-- Quiz Results Modal / Card -->
+        <div id="quizResultsCard" class="hidden p-6 rounded-2xl bg-slate-900 text-white space-y-4 text-center">
+          <div class="text-4xl">🏆</div>
+          <h4 class="text-xl font-extrabold">Quiz Completed!</h4>
+          <div class="text-3xl font-black text-amber-400" id="quizFinalScoreDisplay">Score: 5 / 5 (100%)</div>
+          <p class="text-xs text-slate-300" id="quizMplStatusText">Minimum Proficiency Level (MPL): Achieved (≥75%)</p>
+          <button onclick="closeQuizPanel()" class="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs uppercase tracking-wider">
+            Back to Word Explorer
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="font-bold text-slate-200">PROJECT WORDWISE • 2026 Edition</p>
+          <p class="text-[11px] text-slate-500">Designed for San Jose Del Monte Central School • MATATAG English Curriculum</p>
+        </div>
+        <div class="text-right">
+          <p>Developer: <strong class="text-amber-400">Cristina C. Abu-Abu</strong></p>
+          <p class="text-[11px] text-slate-500">Offline-First PWA • Service Worker Cached</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- TEACHER / DEVELOPER DASHBOARD MODAL        -->
+  <!-- ========================================== -->
+  <div id="teacherDashboardModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+    <div class="glass-card w-full max-w-5xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 my-8 space-y-6 custom-scrollbar max-h-[90vh] overflow-y-auto">
+      
+      <!-- Password Gate Screen -->
+      <div id="teacherAuthGate" class="space-y-4 text-center py-8 max-w-sm mx-auto">
+        <div class="w-16 h-16 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-800 dark:text-brand-300 flex items-center justify-center text-3xl mx-auto">
+          🔒
+        </div>
+        <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Teacher Dashboard Access</h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Enter developer security passkey to access section monitoring and % MPL analytics.</p>
+        
+        <form id="teacherPasskeyForm" class="space-y-3">
+          <input type="password" id="teacherPasskeyInput" required placeholder="Enter Passkey (wordwise2026)" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-center font-bold tracking-widest text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 outline-none" />
+          <button type="submit" class="w-full py-3 rounded-xl bg-brand-800 hover:bg-brand-900 text-white font-bold text-sm shadow-md">
+            Unlock Dashboard 🔓
+          </button>
+        </form>
+        <button onclick="closeTeacherDashboard()" class="text-xs text-slate-400 hover:underline">Cancel & Return</button>
+      </div>
+
+      <!-- Authenticated Dashboard Area -->
+      <div id="teacherDashboardContent" class="hidden space-y-6">
+        
+        <!-- Header Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">📊</span>
+              <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">Teacher & Developer Dashboard</h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">San Jose Del Monte Central School • Developer: Cristina C. Abu-Abu</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="exportTeacherDataCSV()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md">
+              📥 Export CSV Report
+            </button>
+            <button onclick="closeTeacherDashboard()" class="px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs">
+              ✕ Close
+            </button>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-200 dark:border-slate-800 gap-2 text-xs font-extrabold">
+          <button onclick="switchDashboardTab('overview')" id="tabBtnOverview" class="px-4 py-2.5 rounded-t-xl bg-brand-800 text-white">
+            Section Monitoring & % MPL
+          </button>
+          <button onclick="switchDashboardTab('itemAnalysis')" id="tabBtnItemAnalysis" class="px-4 py-2.5 rounded-t-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+            Quiz Item Analysis
+          </button>
+          <button onclick="switchDashboardTab('logs')" id="tabBtnLogs" class="px-4 py-2.5 rounded-t-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+            Student Login Logs
+          </button>
+        </div>
+
+        <!-- TAB 1: SECTION SUMMARY & % MPL -->
+        <div id="tabContentOverview" class="space-y-6">
+          
+          <!-- Key Metrics Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-4 rounded-2xl bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-900/60">
+              <div class="text-xs font-bold uppercase text-brand-600 dark:text-brand-400">Total Registered Learners</div>
+              <div class="text-3xl font-black text-brand-900 dark:text-white mt-1" id="statTotalStudents">0</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60">
+              <div class="text-xs font-bold uppercase text-emerald-600 dark:text-emerald-400">Overall % MPL (≥75%)</div>
+              <div class="text-3xl font-black text-emerald-900 dark:text-emerald-300 mt-1" id="statOverallMpl">0%</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60">
+              <div class="text-xs font-bold uppercase text-amber-600 dark:text-amber-400">Quizzes Completed</div>
+              <div class="text-3xl font-black text-amber-900 dark:text-amber-300 mt-1" id="statTotalQuizzes">0</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900/60">
+              <div class="text-xs font-bold uppercase text-purple-600 dark:text-purple-400">Average Class Score</div>
+              <div class="text-3xl font-black text-purple-900 dark:text-purple-300 mt-1" id="statAvgScore">0.0</div>
+            </div>
+          </div>
+
+          <!-- Section Breakdown Table -->
+          <div class="space-y-3">
+            <h4 class="text-sm font-extrabold text-slate-800 dark:text-slate-200">Section-by-Section Performance Summary</h4>
+            <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-100 dark:bg-slate-900 text-slate-500 uppercase font-black">
+                  <tr>
+                    <th class="p-3">Grade 6 Section</th>
+                    <th class="p-3">Learners Count</th>
+                    <th class="p-3">Quizzes Taken</th>
+                    <th class="p-3">Avg Score</th>
+                    <th class="p-3">% MPL Status</th>
+                  </tr>
+                </thead>
+                <tbody id="sectionSummaryTableBody" class="divide-y divide-slate-200 dark:divide-slate-800">
+                  <!-- Rendered via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- TAB 2: QUIZ ITEM ANALYSIS -->
+        <div id="tabContentItemAnalysis" class="hidden space-y-4">
+          <h4 class="text-sm font-extrabold text-slate-800 dark:text-slate-200">Competency Item Analysis Breakdown</h4>
+          <p class="text-xs text-slate-500">Evaluates difficulty levels by domain to guide remedial reading intervention.</p>
+          
+          <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 dark:bg-slate-900 text-slate-500 uppercase font-black">
+                <tr>
+                  <th class="p-3">Competency Domain</th>
+                  <th class="p-3">Total Attempts</th>
+                  <th class="p-3">Correct</th>
+                  <th class="p-3">Accuracy</th>
+                  <th class="p-3">Difficulty Classification</th>
+                  <th class="p-3">Action Recommendation</th>
+                </tr>
+              </thead>
+              <tbody id="itemAnalysisTableBody" class="divide-y divide-slate-200 dark:divide-slate-800">
+                <!-- Rendered via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 3: STUDENT LOGIN LOGS -->
+        <div id="tabContentLogs" class="hidden space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-extrabold text-slate-800 dark:text-slate-200">Pupil Login & Session Log Record</h4>
+            <button onclick="clearAllLogs()" class="text-xs text-rose-500 hover:underline font-bold">Clear All Logs 🗑️</button>
+          </div>
+
+          <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800 max-h-80">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 dark:bg-slate-900 text-slate-500 uppercase font-black sticky top-0">
+                <tr>
+                  <th class="p-3">Pupil Name</th>
+                  <th class="p-3">Section</th>
+                  <th class="p-3">Login Timestamp</th>
+                  <th class="p-3">Total Sessions</th>
+                </tr>
+              </thead>
+              <tbody id="loginLogsTableBody" class="divide-y divide-slate-200 dark:divide-slate-800">
+                <!-- Rendered via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- SHARE APP & QR CODE MODAL                  -->
+  <!-- ========================================== -->
+  <div id="shareAppModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+    <div class="glass-card w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4 text-center">
